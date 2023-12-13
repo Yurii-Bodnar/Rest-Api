@@ -1,8 +1,9 @@
 # compiled output
 /dist
 /node_modules
-.env
-.vscode/*
+*.production.env
+*.development.env
+*.vscode/*
 
 # Logs
 logs
