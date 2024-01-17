@@ -3,6 +3,9 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { UsersModule } from "./users/users.module";
 import { ConfigModule } from "@nestjs/config";
 import { User } from "./users/users.model";
+import { ProductsModule } from "./products/products.module";
+import { Products } from "./products/products.model";
+import { UserProducts } from "./products/userProducts.model";
 
 @Module({
   controllers: [],
@@ -16,10 +19,11 @@ import { User } from "./users/users.model";
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      models: [User],
+      models: [User, Products, UserProducts],
       autoLoadModels: true,
     }),
     UsersModule,
+    ProductsModule,
   ],
 })
 export class AppModule {}
