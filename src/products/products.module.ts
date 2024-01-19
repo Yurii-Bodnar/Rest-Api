@@ -13,9 +13,9 @@ import { UsersModule } from "src/users/users.module";
   imports: [
     SequelizeModule.forFeature([Products, User, UserProducts]),
     //
-    // UsersModule,
+    UsersModule,
   ],
   ///
-  exports: [ProductsService],
+  // exports: [ProductsService],
 })
 export class ProductsModule {}
