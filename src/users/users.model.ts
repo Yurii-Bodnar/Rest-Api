@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+
 import {
   Model,
   Table,
@@ -10,6 +11,7 @@ import { Products } from "src/products/products.model";
 import { UserProducts } from "src/products/userProducts.model";
 
 interface UserCreationAttrs {
+  name: string;
   email: string;
   password: string;
 }
@@ -24,6 +26,12 @@ export class User extends Model<User, UserCreationAttrs> {
     primaryKey: true,
   })
   id: number;
+  @ApiProperty({ example: "Alex", description: "users name" })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  name: string;
   @ApiProperty({ example: "user@mail.com", description: "users email" })
   @Column({
     type: DataType.STRING,

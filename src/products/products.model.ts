@@ -74,6 +74,7 @@ export class Products extends Model<Products, ProductsCreationAttrs> {
     allowNull: false,
   })
   phone: number;
+
   @BelongsToMany(() => User, () => UserProducts)
   users: User[];
 }

@@ -4,8 +4,10 @@ import { InjectModel } from "@nestjs/sequelize";
 import {
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   NotFoundException,
+  forwardRef,
 } from "@nestjs/common";
 import { ProductDto } from "./dto/product.dto";
 import { Products } from "./products.model";
@@ -13,14 +15,16 @@ import { Products } from "./products.model";
 @Injectable()
 export class ProductsService {
   constructor(
+    @Inject(forwardRef(() => UsersService)) private usersService: UsersService,
     @InjectModel(Products)
-    private productsRepository: typeof Products,
-    private usersService: UsersService
+    private productsRepository: typeof Products
+    // private usersService: UsersService
   ) {}
 
   async addProduct(dto: ProductDto, userId: number) {
     const user = await this.usersService.getUserById(userId);
-    const product = await user.$create("Product", dto);
+    const product = await this.productsRepository.create(dto);
+    await user.$add("products", [product]);
     return product;
   }
 
@@ -75,7 +79,7 @@ export class ProductsService {
       );
     }
   }
-  
+
   async updateProductById(productId: number, updatedProductDto: ProductDto) {
     try {
       const existingProduct = await this.productsRepository.findOne({
